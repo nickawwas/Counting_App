@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name"> Counting App </string>
+    <!-- Main Activity -->
+    <string name="settingsButton"> Settings </string>
+    <string name="counterButtonA"> Counter A </string>
+    <string name="counterButtonB"> Counter B </string>
+    <string name="counterButtonC"> Counter C </string>
+    <string name="totalCount"> Total Count: </string>
+    <string name="showCounts"> Show My Counts </string>
+
+    <!-- Settings Activity -->
+    <string name="settingsActivity"> Settings Activity </string>
+    <string name="counterLabel1"> Counter 1 Name </string>
+    <string name="counterLabel2"> Counter 2 Name </string>
+    <string name="counterLabel3"> Counter 3 Name </string>
+    <string name="maxCountLabel"> Maximum Counts </string>
+    <string name="counterInputPlaceholder"> Enter Counter Name Here </string>
+    <string name="maxCountInputPlaceholder"> Enter Max Count Here </string>
+    <string name="saveCounterButton"> Save </string>
+    <string name="editSettings"> Edit Settings </string>
+
+    <!-- Data Activity   -->
+    <string name="dataActivity"> Data Activity </string>
+    <string name="eventLabelA"> Event A: </string>
+    <string name="eventLabelB"> Event B: </string>
+    <string name="eventLabelC"> Event C: </string>
+    <string name="totalEvents"> Total Events: </string>
+    <string name="toggleEventNames"> Toggle Event Names </string>
+    <string name="dataType"> Events </string>
+</resources>
+
