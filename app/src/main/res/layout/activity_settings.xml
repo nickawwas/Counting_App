@@ -8,7 +8,7 @@
     tools:context=".SettingsActivity">
 
     <LinearLayout
-        android:id="@+id/mainPageLayout"
+        android:id="@+id/settingsPageLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
