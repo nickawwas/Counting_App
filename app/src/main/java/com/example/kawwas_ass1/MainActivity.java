@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     protected TextView totalCount;
@@ -74,6 +75,33 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         //Go To Settings If Counters Names are Null
+        if(sharedPreferencesHelper.getCounterName("A") == null && sharedPreferencesHelper.getCounterName("B") == null && sharedPreferencesHelper.getCounterName("C") == null) {
+            goToSettingsActivity();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        String oldCounterNameA = counterA.getText().toString();
+        String oldCounterNameB = counterB.getText().toString();
+        String oldCounterNameC = counterC.getText().toString();
+
+        String newCounterNameA = sharedPreferencesHelper.getCounterName("A");
+        String newCounterNameB = sharedPreferencesHelper.getCounterName("B");
+        String newCounterNameC = sharedPreferencesHelper.getCounterName("C");
+
+        // Set Button Text to Defined Names If Changed
+        // TODO: Check IF Max Count Changed
+        if(!oldCounterNameA.equals(newCounterNameA) ||  !oldCounterNameB.equals(newCounterNameB) || !oldCounterNameC.equals(newCounterNameC)) {
+            counterA.setText(newCounterNameA);
+            counterB.setText(newCounterNameB);
+            counterC.setText(newCounterNameC);
+
+            sharedPreferencesHelper.resetTotalCount();
+            totalCount.setText(getTotalCountText());
+        }
     }
 
     // Navigation to Settings and Data Activities
@@ -97,11 +125,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateTotalCount() {
-        sharedPreferencesHelper.incTotalCount();
-        totalCount.setText(getTotalCountText());
-    }
+        int maxCount = sharedPreferencesHelper.getMaxCount();
+        int currentCount = sharedPreferencesHelper.getTotalCount();
 
-/*
-Toast.makeText(getApplicationContext(), "Toast Message Here", Toast.LENGTH_LONG).show();
- */
+        if(currentCount < maxCount) {
+            sharedPreferencesHelper.incTotalCount();
+            totalCount.setText(getTotalCountText());
+        } else {
+            Toast.makeText(getApplicationContext(), "Max Count (" + maxCount + ") Reached!", Toast.LENGTH_SHORT).show();
+        }
+    }
 }

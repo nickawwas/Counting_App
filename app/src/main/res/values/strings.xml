@@ -18,6 +18,10 @@
     <string name="maxCountInputPlaceholder"> Enter Max Count Here </string>
     <string name="saveCounterButton"> Save </string>
     <string name="editSettings"> Edit Settings </string>
+    <string name="counterNameDigits">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="maxCountDigits">0123456789</string>
+    <string name="counterMaxLen">20</string>
+    <string name="maxCountMaxLength">3</string>
 
     <!-- Data Activity   -->
     <string name="dataActivity"> Data Activity </string>
