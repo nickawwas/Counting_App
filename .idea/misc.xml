@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/layout/content_settings.xml" value="0.13760683760683762" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.13760683760683762" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.13760683760683762" />
+        <entry key="app/src/main/res/menu/data_menu.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/settings_menu.xml" value="0.33" />
       </map>
     </option>
   </component>

@@ -2,6 +2,7 @@ package com.example.kawwas_ass1.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
@@ -22,6 +23,9 @@ public interface EventDAO {
     // @Query("SELECT event_name, COUNT(*) FROM event_table GROUP BY event_name")
     // List<Event> getTotalEvents();
 
-//    @Delete
-//    void delete(Event event);
+    @Insert
+    void insertSensors(Event... events);
+
+    @Delete
+    void deleteAllEvents(Event event);
 }
