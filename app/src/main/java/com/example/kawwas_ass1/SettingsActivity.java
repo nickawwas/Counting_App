@@ -81,15 +81,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Go To Settings If Counters Names are Null
 
-//        if(sharedPreferencesHelper.getCounterName("A") == null) {
-//            Toast.makeText(getApplicationContext(), "Please Enter a Name", Toast.LENGTH_SHORT).show();
-//        }
+        //  if(sharedPreferencesHelper.getCounterName("A") == null) {
+        //      Toast.makeText(getApplicationContext(), "Please Enter a Name", Toast.LENGTH_SHORT).show();
+        //  }
     }
 
     // Get Counter Input Name Text
     private String getInputText(EditText counterElement) {
         return counterElement.getText().toString();
     }
-
-    //
 }

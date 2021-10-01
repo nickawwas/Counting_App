@@ -20,6 +20,28 @@ public class SharedPreferencesHelper {
         return sharedPreferences.getString("counterName" + counterId, null);
     }
 
+    // Set & Get Data Mode (Event Name or Button #)
+    public void setDataMode(boolean isEventNameMode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("dataMode", isEventNameMode);
+        editor.commit();
+    }
+
+    public boolean getDataMode() {
+        return sharedPreferences.getBoolean("dataMode", false);
+    }
+
+    // Set & Get Settings Mode (Editable or Uneditable)
+    public void setSettingsMode(boolean isEditMode) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("settingsMode", isEditMode);
+        editor.commit();
+    }
+
+    public boolean getSettingsMode() {
+        return sharedPreferences.getBoolean("settingsMode", false);
+    }
+
     // Update & Get Max Count
     public void updateMaxCount(int maxCount) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
