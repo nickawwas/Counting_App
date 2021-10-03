@@ -49,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
         counterA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateTotalCount();
+                // Increment Total Count and Counter Count
+                updateTotalCount("A");
+
+                // Insert Event into DB
                 db.eventDAO().insertEvent(new Event(0, sharedPreferencesHelper.getCounterName("A"), "1"));
             }
         });
@@ -57,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
         counterB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateTotalCount();
+                // Increment Total Count and Counter Count
+                updateTotalCount("B");
+
+                // Insert Event into DB
                 db.eventDAO().insertEvent(new Event(0, sharedPreferencesHelper.getCounterName("B"), "2"));
             }
         });
@@ -65,7 +71,10 @@ public class MainActivity extends AppCompatActivity {
         counterC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateTotalCount();
+                // Increment Total Count and Counter Count
+                updateTotalCount("C");
+
+                // Insert Event into DB
                 db.eventDAO().insertEvent(new Event(0, sharedPreferencesHelper.getCounterName("C"), "3"));
             }
         });
@@ -121,13 +130,18 @@ public class MainActivity extends AppCompatActivity {
         totalCount.setText(getTotalCountText());
     }
 
-    private void updateTotalCount() {
+    private void updateTotalCount(String counterId) {
         int maxCount = sharedPreferencesHelper.getMaxCount();
         int currentCount = sharedPreferencesHelper.getTotalCount();
 
+        // Check if Count Can Be Increment (ie Max Count Not Yet ReacheD)
         if(currentCount < maxCount) {
+            // Increment and Set Total Count Text
             sharedPreferencesHelper.incTotalCount();
             totalCount.setText(getTotalCountText());
+
+            // Increment Button Count
+            sharedPreferencesHelper.incCounterCount(counterId, sharedPreferencesHelper.getCounterCount(counterId));
         } else {
             Toast.makeText(getApplicationContext(), "Max Count (" + maxCount + ") Reached!", Toast.LENGTH_SHORT).show();
         }

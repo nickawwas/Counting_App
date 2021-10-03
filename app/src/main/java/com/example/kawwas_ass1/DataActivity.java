@@ -45,7 +45,7 @@ public class DataActivity extends AppCompatActivity {
         super.onStart();
 
         //Default Display Event Names, but When Toggled Display Counter 1, 2, 3 in List As Well
-        initEventsCount(sharedPreferencesHelper.getDataMode());
+        initEventsCount(true);
     }
 
     // Create Options Menu
@@ -70,34 +70,40 @@ public class DataActivity extends AppCompatActivity {
 
     private void initEventsCount(boolean eventNameModeEnabled) {
         // Get Count for Each Event
-        int eventACount = db.eventDAO().getEventsCountByNum("1");
-        int eventBCount = db.eventDAO().getEventsCountByNum("2");
-        int eventCCount = db.eventDAO().getEventsCountByNum("3");
+        int eventACount = sharedPreferencesHelper.getCounterCount("A");
+        int eventBCount = sharedPreferencesHelper.getCounterCount("B");
+        int eventCCount = sharedPreferencesHelper.getCounterCount("C");
 
         // Set Text Based on Data Mode Enabled
-        if(eventNameModeEnabled) {
-            eventA.setText(getDefinedEventCountText("A", eventACount));
-            eventB.setText(getDefinedEventCountText("B", eventBCount));
-            eventC.setText(getDefinedEventCountText("C", eventCCount));
+        if (eventNameModeEnabled) {
+            eventA.setText(getFullEventText(getEventName("A"), eventACount));
+            eventB.setText(getFullEventText(getEventName("B"), eventBCount));
+            eventC.setText(getFullEventText(getEventName("C"), eventCCount));
         } else {
-            eventA.setText(getNumberedEventCountText(R.string.eventLabelA, eventACount));
-            eventB.setText(getNumberedEventCountText(R.string.eventLabelB, eventBCount));
-            eventC.setText(getNumberedEventCountText(R.string.eventLabelC, eventCCount));
+            eventA.setText(getFullEventText(getEventNameByResource(R.string.eventLabelA),  eventACount));
+            eventB.setText(getFullEventText(getEventNameByResource(R.string.eventLabelB), eventBCount));
+            eventC.setText(getFullEventText(getEventNameByResource(R.string.eventLabelC), eventCCount));
         }
-        totalEvents.setText(getNumberedEventCountText(R.string.totalEvents, sharedPreferencesHelper.getTotalCount()));
+        totalEvents.setText(getEventNameByResource(R.string.totalEvents) + sharedPreferencesHelper.getTotalCount());
 
         // Update Data Mode & List Based on Enabled Data Mode
         sharedPreferencesHelper.setDataMode(eventNameModeEnabled);
         getEventList(eventNameModeEnabled);
     }
 
-    // Helper Functions to Provide Text Format for Counter Data
-    private String getDefinedEventCountText(String counterId, int counterCount) {
-        return sharedPreferencesHelper.getCounterName(counterId) + ": " + counterCount + " events";
+    // Get Event Name from SharedPreferences W/ Text Formatted for TextEdit
+    private String getEventName(String counterId) {
+        return sharedPreferencesHelper.getCounterName(counterId) + ": ";
     }
 
-    private String getNumberedEventCountText(int stringResource, int counterCount) {
-        return getResources().getString(stringResource) + " " + counterCount + " events";
+    // Get Event Name from Resource W/ Text Formatted for TextEdit
+    private String getEventNameByResource(int resourceId) {
+        return getResources().getString(resourceId) + " ";
+    }
+
+    // Get Full Event Text (Name, Count & Format) for TextEdit
+    private String getFullEventText(String eventName, int eventCount) {
+        return eventName + eventCount + " events";
     }
 
     private void getEventList(boolean eventNameModeEnabled) {

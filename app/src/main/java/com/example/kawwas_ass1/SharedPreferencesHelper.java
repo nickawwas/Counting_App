@@ -42,6 +42,17 @@ public class SharedPreferencesHelper {
         return sharedPreferences.getString("counterName" + counterId, null);
     }
 
+    // Increment & Get Counter Counts
+    public void incCounterCount(String counterId, int currCount) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("counterCount" + counterId,  currCount + 1);
+        editor.commit();
+    }
+
+    public int getCounterCount(String counterId) {
+        return sharedPreferences.getInt("counterCount" + counterId, 0);
+    }
+
     // Set & Get Data Mode (Event Name or Button #)
     public void setDataMode(boolean isEventNameMode) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -67,14 +78,16 @@ public class SharedPreferencesHelper {
     // Reset, Increment & Get Total Count
     public void incTotalCount() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        int totalCount = getTotalCount();
-        editor.putInt("totalCount", ++totalCount);
+        editor.putInt("totalCount", getTotalCount() + 1);
         editor.commit();
     }
 
     public void resetTotalCount() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("totalCount", 0);
+        editor.putInt("counterCountA", 0);
+        editor.putInt("counterCountB", 0);
+        editor.putInt("counterCountC", 0);
         editor.commit();
     }
 
