@@ -1,11 +1,11 @@
-package com.example.kawwas_ass1.database.dao;
+package com.example.counting_app.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import java.util.List;
-import com.example.kawwas_ass1.database.entity.Event;
+import com.example.counting_app.database.entity.Event;
 
 @Dao
 public interface EventDAO {

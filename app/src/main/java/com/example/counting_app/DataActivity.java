@@ -1,4 +1,4 @@
-package com.example.kawwas_ass1;
+package com.example.counting_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.kawwas_ass1.database.AppDB;
+import com.example.counting_app.database.AppDB;
 
 public class DataActivity extends AppCompatActivity {
 

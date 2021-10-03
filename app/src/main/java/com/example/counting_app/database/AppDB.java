@@ -1,4 +1,4 @@
-package com.example.kawwas_ass1.database;
+package com.example.counting_app.database;
 
 import android.content.Context;
 
@@ -6,8 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.kawwas_ass1.database.dao.EventDAO;
-import com.example.kawwas_ass1.database.entity.Event;
+import com.example.counting_app.database.dao.EventDAO;
+import com.example.counting_app.database.entity.Event;
 
 @Database(entities = { Event.class }, version = 2)
 public abstract class AppDB extends RoomDatabase {

@@ -1,4 +1,4 @@
-package com.example.kawwas_ass1;
+package com.example.counting_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.kawwas_ass1.database.AppDB;
+import com.example.counting_app.database.AppDB;
 
 public class SettingsActivity extends AppCompatActivity {
 

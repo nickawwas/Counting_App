@@ -1,4 +1,4 @@
-package com.example.kawwas_ass1.database.entity;
+package com.example.counting_app.database.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

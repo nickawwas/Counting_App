@@ -1,4 +1,4 @@
-package com.example.kawwas_ass1;
+package com.example.counting_app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
