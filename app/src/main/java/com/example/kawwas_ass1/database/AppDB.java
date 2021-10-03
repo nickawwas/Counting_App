@@ -1,13 +1,34 @@
 package com.example.kawwas_ass1.database;
 
+import android.content.Context;
+
 import androidx.room.Database;
+import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.kawwas_ass1.database.dao.EventDAO;
 import com.example.kawwas_ass1.database.entity.Event;
 
-//@Database(entities = { Event.class }, version = 1)
+@Database(entities = { Event.class }, version = 1)
 public abstract class AppDB extends RoomDatabase {
+    private static volatile AppDB instance;
+    private static final String DB_NAME = "eventDB";
+
     protected AppDB(){};
 
-    //TODO: Setup DB in Video 13-14
+    // Create DB Function
+    private static AppDB create(Context context) {
+        return Room.databaseBuilder(context, AppDB.class, DB_NAME).build();
+    }
+
+    // Singleton Creating DB or Returning Existing DB
+    public static synchronized AppDB getInstance(Context context) {
+        if(instance == null)
+            instance = create(context);
+
+        return instance;
+    }
+
+    // Give Access to DAO
+    public abstract EventDAO eventDAO();
 }

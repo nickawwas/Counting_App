@@ -24,7 +24,7 @@ public interface EventDAO {
     // List<Event> getTotalEvents();
 
     @Insert
-    void insertSensors(Event... events);
+    void insertEvents(Event... events);
 
     @Delete
     void deleteAllEvents(Event event);

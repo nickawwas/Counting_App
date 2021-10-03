@@ -10,14 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kawwasass1">
         <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".DataActivity"
-            android:parentActivityName=".MainActivity"
-            android:exported="true" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -26,6 +18,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/settingsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".DataActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="@string/dataActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

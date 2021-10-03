@@ -48,6 +48,14 @@
             android:layout_marginVertical="10dp"
             android:text="@string/totalEvents"
             android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/eventDataList"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:textStyle="normal"
+            />
     </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

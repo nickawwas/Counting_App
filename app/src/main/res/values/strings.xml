@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name"> Counting App </string>
+
     <!-- Main Activity -->
     <string name="settingsButton"> Settings </string>
     <string name="counterButtonA"> Counter A </string>
@@ -25,9 +26,9 @@
 
     <!-- Data Activity   -->
     <string name="dataActivity"> Data Activity </string>
-    <string name="eventLabelA"> Event A: </string>
-    <string name="eventLabelB"> Event B: </string>
-    <string name="eventLabelC"> Event C: </string>
+    <string name="eventLabelA"> Event 1: </string>
+    <string name="eventLabelB"> Event 2: </string>
+    <string name="eventLabelC"> Event 3: </string>
     <string name="totalEvents"> Total Events: </string>
     <string name="toggleEventNames"> Toggle Event Names </string>
     <string name="dataType"> Events </string>

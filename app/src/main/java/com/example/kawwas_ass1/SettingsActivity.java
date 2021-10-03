@@ -79,22 +79,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         //If Counter Names are Null
         // - Show Placeholder Otherwise Show Saved Values
-
-        // No Save Button in Display Mode, Only in Edit Mode
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        // If App Not Initialized, Define Inputs
+        // If App Not Initialized, Show Placeholder in Edit Mode, Otherwise Show Saved Values in Display Mode
         if(!sharedPreferencesHelper.getAppInitStatus()) {
             setInputsEditableState(true);
-
-            counterInputNameA.setHint(R.string.counterInputPlaceholder);
-            counterInputNameB.setHint(R.string.counterInputPlaceholder);
-            counterInputNameC.setHint(R.string.counterInputPlaceholder);
-            maxCountInput.setHint(R.string.maxCountInputPlaceholder);
         } else {
             setInputsEditableState(false);
 
@@ -103,39 +96,6 @@ public class SettingsActivity extends AppCompatActivity {
             counterInputNameC.setText(sharedPreferencesHelper.getCounterName("C"));
             maxCountInput.setText(sharedPreferencesHelper.getMaxCount() + "");
         }
-
-//        if(sharedPreferencesHelper.getCounterName("A") == null && sharedPreferencesHelper.getCounterName("B") == null && sharedPreferencesHelper.getCounterName("C") == null) {
-//            //sharedPreferencesHelper.setSettingsMode(true);
-//            //setInputsEditableState(true);
-//            //setInputsFocusable();
-//
-//            counterInputNameA.setHint(R.string.counterInputPlaceholder);
-//            counterInputNameB.setHint(R.string.counterInputPlaceholder);
-//            counterInputNameC.setHint(R.string.counterInputPlaceholder);
-//            maxCountInput.setHint(R.string.maxCountInputPlaceholder);
-//        } else {
-//            //sharedPreferencesHelper.setSettingsMode(false);
-//            //setInputsEditableState(false);
-//            counterInputNameA.setText(sharedPreferencesHelper.getCounterName("A"));
-//            counterInputNameB.setText(sharedPreferencesHelper.getCounterName("B"));
-//            counterInputNameC.setText(sharedPreferencesHelper.getCounterName("C"));
-//            maxCountInput.setText(sharedPreferencesHelper.getMaxCount());
-//        }
-
-        //Go To Settings If Counters Names are Null
-//        if(sharedPreferencesHelper.getCounterName("A") == null) {
-//            setInputsEditableState(true);
-//
-//            counterInputNameA.setHint(R.string.counterInputPlaceholder);
-//            counterInputNameB.setHint(R.string.counterInputPlaceholder);
-//            counterInputNameC.setHint(R.string.counterInputPlaceholder);
-//            maxCountInput.setHint(R.string.maxCountInputPlaceholder);
-//        } else {
-//            counterInputNameA.setHint(sharedPreferencesHelper.getCounterName("A"));
-//            counterInputNameB.setHint(sharedPreferencesHelper.getCounterName("B"));
-//            counterInputNameC.setHint(sharedPreferencesHelper.getCounterName("C"));
-//            maxCountInput.setHint(sharedPreferencesHelper.getMaxCount());
-//        }
     }
 
     // Create Options Menu
@@ -150,7 +110,6 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.editSettingsItem:
-                sharedPreferencesHelper.setSettingsMode(true);
                 setInputsEditableState(true);
                 return true;
             default:
@@ -171,16 +130,4 @@ public class SettingsActivity extends AppCompatActivity {
         maxCountInput.setEnabled(editState);
         saveButton.setEnabled(editState);
     }
-
-    // Set Focusable Input Fields
-//    private void setInputsFocusable() {
-//        counterInputNameA.setFocusableInTouchMode(true);
-//        counterInputNameB.setFocusableInTouchMode(true);
-//        counterInputNameC.setFocusableInTouchMode(true);
-//        maxCountInput.setFocusableInTouchMode(true);
-//        counterInputNameA.setFocusable(true);
-//        counterInputNameB.setFocusable(true);
-//        counterInputNameC.setFocusable(true);
-//        maxCountInput.setFocusable(true);
-//    }
 }
