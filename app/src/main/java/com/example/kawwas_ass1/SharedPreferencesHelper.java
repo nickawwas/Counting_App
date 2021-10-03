@@ -20,6 +20,17 @@ public class SharedPreferencesHelper {
         return sharedPreferences.getBoolean("appInitStatus", false);
     }
 
+    // Set & Get Settings Change
+    public void setChangedSettingsState(boolean changedState) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("changedSettings", changedState);
+        editor.commit();
+    }
+
+    public boolean getChangedSettingsState() {
+        return sharedPreferences.getBoolean("changedSettings", false);
+    }
+
     // Update & Get Counter Names
     public void updateCounterName(String counterId, String newCounterName) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -40,17 +51,6 @@ public class SharedPreferencesHelper {
 
     public boolean getDataMode() {
         return sharedPreferences.getBoolean("dataMode", false);
-    }
-
-    // Set & Get Settings Mode (Editable or Uneditable)
-    public void setSettingsMode(boolean isEditMode) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("settingsMode", isEditMode);
-        editor.commit();
-    }
-
-    public boolean getSettingsMode() {
-        return sharedPreferences.getBoolean("settingsMode", false);
     }
 
     // Update & Get Max Count

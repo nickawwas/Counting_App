@@ -12,10 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
-    <style name="Theme.Kawwasass1.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
     <style name="Theme.Kawwasass1.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.Kawwasass1.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

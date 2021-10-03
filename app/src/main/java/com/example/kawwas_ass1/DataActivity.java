@@ -5,18 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kawwas_ass1.database.AppDB;
-import com.example.kawwas_ass1.database.entity.Event;
 
 public class DataActivity extends AppCompatActivity {
 
     protected TextView eventA, eventB, eventC, totalEvents;
     protected ListView eventsList;
     protected SharedPreferencesHelper sharedPreferencesHelper;
+    protected AppDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +28,16 @@ public class DataActivity extends AppCompatActivity {
 
         sharedPreferencesHelper = new SharedPreferencesHelper(DataActivity.this);
 
+        // Connect to DB
+        db = AppDB.getInstance(getApplicationContext());
+
         eventA = findViewById(R.id.eventLabelA);
         eventB = findViewById(R.id.eventLabelB);
         eventC = findViewById(R.id.eventLabelC);
         totalEvents = findViewById(R.id.totalEvents);
 
-        // Scrollable List of All Counts (Stack)
+        // Scrollable List of All Counts
         eventsList = findViewById(R.id.eventDataList);
-
-
     }
 
     @Override
@@ -44,12 +45,7 @@ public class DataActivity extends AppCompatActivity {
         super.onStart();
 
         //Default Display Event Names, but When Toggled Display Counter 1, 2, 3 in List As Well
-        sharedPreferencesHelper.setDataMode(true);
-        initEventsCount();
-
-        // Connect DB
-        AppDB db = AppDB.getInstance(getApplicationContext());
-        db.eventDAO().insertEvents(new Event(0, "Test Event"));
+        initEventsCount(sharedPreferencesHelper.getDataMode());
     }
 
     // Create Options Menu
@@ -65,20 +61,21 @@ public class DataActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.toggleEventNamesItem:
                 // Toggle Between Event Name And Number
-                sharedPreferencesHelper.setDataMode(!sharedPreferencesHelper.getDataMode());
-                initEventsCount();
+                initEventsCount(!sharedPreferencesHelper.getDataMode());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void initEventsCount() {
-        String eventACount = "1";
-        String eventBCount = "2";
-        String eventCCount = "Nice";
+    private void initEventsCount(boolean eventNameModeEnabled) {
+        // Get Count for Each Event
+        int eventACount = db.eventDAO().getEventsCountByNum("1");
+        int eventBCount = db.eventDAO().getEventsCountByNum("2");
+        int eventCCount = db.eventDAO().getEventsCountByNum("3");
 
-        if(sharedPreferencesHelper.getDataMode()) {
+        // Set Text Based on Data Mode Enabled
+        if(eventNameModeEnabled) {
             eventA.setText(getDefinedEventCountText("A", eventACount));
             eventB.setText(getDefinedEventCountText("B", eventBCount));
             eventC.setText(getDefinedEventCountText("C", eventCCount));
@@ -87,15 +84,23 @@ public class DataActivity extends AppCompatActivity {
             eventB.setText(getNumberedEventCountText(R.string.eventLabelB, eventBCount));
             eventC.setText(getNumberedEventCountText(R.string.eventLabelC, eventCCount));
         }
+        totalEvents.setText(getNumberedEventCountText(R.string.totalEvents, sharedPreferencesHelper.getTotalCount()));
 
-        totalEvents.setText(getNumberedEventCountText(R.string.totalEvents, sharedPreferencesHelper.getTotalCount() + ""));
+        // Update Data Mode & List Based on Enabled Data Mode
+        sharedPreferencesHelper.setDataMode(eventNameModeEnabled);
+        getEventList(eventNameModeEnabled);
     }
 
-    private String getDefinedEventCountText(String counterId, String counterCount) {
-        return sharedPreferencesHelper.getCounterName(counterId) + ": " + counterCount;
+    // Helper Functions to Provide Text Format for Counter Data
+    private String getDefinedEventCountText(String counterId, int counterCount) {
+        return sharedPreferencesHelper.getCounterName(counterId) + ": " + counterCount + " events";
     }
 
-    private String getNumberedEventCountText(int stringResource, String counterCount) {
-        return getResources().getString(stringResource) + " " + counterCount;
+    private String getNumberedEventCountText(int stringResource, int counterCount) {
+        return getResources().getString(stringResource) + " " + counterCount + " events";
+    }
+
+    private void getEventList(boolean eventNameModeEnabled) {
+        eventsList.setAdapter(new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, eventNameModeEnabled ? db.eventDAO().getEventsListByName() : db.eventDAO().getEventsListByNum()));
     }
 }

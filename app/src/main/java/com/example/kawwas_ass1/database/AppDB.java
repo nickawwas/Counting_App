@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.kawwas_ass1.database.dao.EventDAO;
 import com.example.kawwas_ass1.database.entity.Event;
 
-@Database(entities = { Event.class }, version = 1)
+@Database(entities = { Event.class }, version = 2)
 public abstract class AppDB extends RoomDatabase {
     private static volatile AppDB instance;
     private static final String DB_NAME = "eventDB";
@@ -18,7 +18,7 @@ public abstract class AppDB extends RoomDatabase {
 
     // Create DB Function
     private static AppDB create(Context context) {
-        return Room.databaseBuilder(context, AppDB.class, DB_NAME).build();
+        return Room.databaseBuilder(context, AppDB.class, DB_NAME).allowMainThreadQueries().build();
     }
 
     // Singleton Creating DB or Returning Existing DB

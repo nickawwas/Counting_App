@@ -1,7 +1,6 @@
 package com.example.kawwas_ass1.database.dao;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -10,22 +9,24 @@ import com.example.kawwas_ass1.database.entity.Event;
 
 @Dao
 public interface EventDAO {
-    @Query("SELECT * FROM event_table")
-    List<Event> getAllEvents();
+    // Get List of Events from Table
+    @Query("SELECT event_num FROM event_table")
+    List<String> getEventsListByNum();
 
-    @Query("SELECT COUNT(*) FROM event_table WHERE event_name=:eventName")
-    int getTotalEventsByName(String eventName);
+    @Query("SELECT event_name FROM event_table")
+    List<String> getEventsListByName();
 
+    // Get Events Total and Individual Count
     @Query("SELECT COUNT(*) FROM event_table")
-    int getTotalEvents();
+    int getTotalEventsCount();
 
-    // Get Table of Events and Occurences
-    // @Query("SELECT event_name, COUNT(*) FROM event_table GROUP BY event_name")
-    // List<Event> getTotalEvents();
+    @Query("SELECT COUNT(*) FROM event_table WHERE event_num=:eventNum")
+    int getEventsCountByNum(String eventNum);
 
+    // Insert & Delete Events
     @Insert
-    void insertEvents(Event... events);
+    void insertEvent(Event... events);
 
-    @Delete
-    void deleteAllEvents(Event event);
+    @Query("DELETE FROM event_table")
+    void clearTable();
 }

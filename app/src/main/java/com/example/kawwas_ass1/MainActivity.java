@@ -9,10 +9,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.kawwas_ass1.database.AppDB;
+import com.example.kawwas_ass1.database.entity.Event;
+
 public class MainActivity extends AppCompatActivity {
     protected TextView totalCount;
     protected Button counterA, counterB, counterC, settings, showCounts;
     protected SharedPreferencesHelper sharedPreferencesHelper;
+    protected AppDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         sharedPreferencesHelper = new SharedPreferencesHelper(MainActivity.this);
+
+        // Connect to DB
+        db = AppDB.getInstance(getApplicationContext());
 
         // Create Object & Initialize Total Count
         totalCount = findViewById(R.id.totalCount);
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateTotalCount();
+                db.eventDAO().insertEvent(new Event(0, sharedPreferencesHelper.getCounterName("A"), "1"));
             }
         });
 
@@ -50,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateTotalCount();
+                db.eventDAO().insertEvent(new Event(0, sharedPreferencesHelper.getCounterName("B"), "2"));
             }
         });
 
@@ -57,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateTotalCount();
+                db.eventDAO().insertEvent(new Event(0, sharedPreferencesHelper.getCounterName("C"), "3"));
             }
         });
 
@@ -77,30 +87,17 @@ public class MainActivity extends AppCompatActivity {
         //Go To Settings If Counters Names and Max Count are Not Defined
         if(!sharedPreferencesHelper.getAppInitStatus()) {
             goToSettingsActivity();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        String oldCounterNameA = counterA.getText().toString();
-        String oldCounterNameB = counterB.getText().toString();
-        String oldCounterNameC = counterC.getText().toString();
-
-        String newCounterNameA = sharedPreferencesHelper.getCounterName("A");
-        String newCounterNameB = sharedPreferencesHelper.getCounterName("B");
-        String newCounterNameC = sharedPreferencesHelper.getCounterName("C");
-
-        // Set Button Text to Defined Names If Changed
-        // TODO: Check IF Max Count Changed
-        // TODO: Change Changed Counter...
-        if(!oldCounterNameA.equals(newCounterNameA) ||  !oldCounterNameB.equals(newCounterNameB) || !oldCounterNameC.equals(newCounterNameC)) {
-            counterA.setText(newCounterNameA);
-            counterB.setText(newCounterNameB);
-            counterC.setText(newCounterNameC);
+        // Set Button Text to Defined Counters or Max Count is Changed
+        } else if(sharedPreferencesHelper.getChangedSettingsState()){
+            setCounterButtonNames();
 
             sharedPreferencesHelper.resetTotalCount();
+            initTotalCount();
+
+            sharedPreferencesHelper.setChangedSettingsState(false);
+        // Set Counter Names
+        } else {
+            setCounterButtonNames();
         }
     }
 
@@ -134,5 +131,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Max Count (" + maxCount + ") Reached!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Set Buttons to New Counter Names
+    private void setCounterButtonNames() {
+        counterA.setText(sharedPreferencesHelper.getCounterName("A"));
+        counterB.setText(sharedPreferencesHelper.getCounterName("B"));
+        counterC.setText(sharedPreferencesHelper.getCounterName("C"));
     }
 }

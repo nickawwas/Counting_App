@@ -8,14 +8,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.kawwas_ass1.database.AppDB;
 
 public class SettingsActivity extends AppCompatActivity {
 
     protected Button saveButton;
     protected EditText counterInputNameA, counterInputNameB, counterInputNameC, maxCountInput;
     protected SharedPreferencesHelper sharedPreferencesHelper;
+    protected AppDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,9 @@ public class SettingsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         sharedPreferencesHelper = new SharedPreferencesHelper(SettingsActivity.this);
+
+        // Connect to DB
+        db = AppDB.getInstance(getApplicationContext());
 
         // Input Fields for Counters and Max Count
         counterInputNameA = findViewById(R.id.counterInput1);
@@ -44,7 +49,10 @@ public class SettingsActivity extends AppCompatActivity {
                 String counterTextC = getInputText(counterInputNameC);
                 String maxCountText = getInputText(maxCountInput);
 
-                // Validate Inputs - Must Be Filled and Meet Criteria Provided
+                // Validate Inputs - All Inputs Must Be Filled and Meet Criteria Provided
+                //  - Be At Most 20 Characters (Only Alphabet and Spaces) for Counters' Name
+                //  - Between 5 & 200 for Max Count Value (Only Numbers)
+                //  - Update and Clear Data Only When Changes Have Been Made
                 if(counterTextA.isEmpty() || counterTextB.isEmpty() || counterTextC.isEmpty() || maxCountText.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Must Fill All Input Fields!", Toast.LENGTH_LONG).show();
                 } else {
@@ -53,39 +61,40 @@ public class SettingsActivity extends AppCompatActivity {
                     if (maxCountNum < 5 || maxCountNum > 200) {
                         Toast.makeText(getApplicationContext(), "Max Count Must Be Between 5 & 200!", Toast.LENGTH_LONG).show();
                     } else {
-                        //Update Inputs If Criteria is Satisfied
-                        sharedPreferencesHelper.updateCounterName("A", counterTextA);
-                        sharedPreferencesHelper.updateCounterName("B", counterTextB);
-                        sharedPreferencesHelper.updateCounterName("C", counterTextC);
-                        sharedPreferencesHelper.updateMaxCount(maxCountNum);
+                        // Update Only if Data Was Changed
+                        if(!counterTextA.equals(sharedPreferencesHelper.getCounterName("A")) || !counterTextB.equals(sharedPreferencesHelper.getCounterName("B")) || !counterTextC.equals(sharedPreferencesHelper.getCounterName("C")) || maxCountNum != sharedPreferencesHelper.getMaxCount()) {
+                            //Update Inputs If Criteria is Satisfied
+                            sharedPreferencesHelper.updateCounterName("A", counterTextA);
+                            sharedPreferencesHelper.updateCounterName("B", counterTextB);
+                            sharedPreferencesHelper.updateCounterName("C", counterTextC);
+                            sharedPreferencesHelper.updateMaxCount(maxCountNum);
 
+                            // Clear Table of Old Data
+                            db.eventDAO().clearTable();
+
+                            // App Initialization Complete
+                            if(!sharedPreferencesHelper.getAppInitStatus())
+                                sharedPreferencesHelper.setAppInitStatus();
+
+                            // Settings Have Been Updated
+                            sharedPreferencesHelper.setChangedSettingsState(true);
+                            Toast.makeText(getApplicationContext(), "Changes Saved!", Toast.LENGTH_LONG).show();
+                        }
+
+                        // Make Inputs Uneditable
                         setInputsEditableState(false);
-
-                        // App Initialization Complete
-                        if(!sharedPreferencesHelper.getAppInitStatus())
-                            sharedPreferencesHelper.setAppInitStatus();
                     }
                 }
             }
         });
-
-        //Disabled Until User Enters Edit Mode
-        // - User Must First Press Action Button in Action Bar
-        // - If Counter Names Are Null, Default in Edit Mode
-
-        // Add Validation to Counters
-        // - At Most 20 Characters Long + Only Alphabet & Spaces
-        // - Between 5 & 200 for Max Count + Only Numbers
-
-        //If Counter Names are Null
-        // - Show Placeholder Otherwise Show Saved Values
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
-        // If App Not Initialized, Show Placeholder in Edit Mode, Otherwise Show Saved Values in Display Mode
+        // If App Not Initialized (Counters Not Yet Defined), Show Placeholder in Edit Mode, Otherwise Show Saved Values in Display Mode
+        // Else If App is Initialized (Counters are Defined), Show Editable Values in Edit Mode, Otherwise Show Uneditable Values in Display Mode
         if(!sharedPreferencesHelper.getAppInitStatus()) {
             setInputsEditableState(true);
         } else {

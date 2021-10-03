@@ -12,8 +12,14 @@ public class Event {
     @ColumnInfo(name = "event_name")
     public String event_name;
 
-    public Event(int eventId, String eventName) {
+    @ColumnInfo(name = "event_num")
+    public String event_num;
+
+    public Event(){};
+
+    public Event(int eventId, String eventName, String eventNum) {
         event_id = eventId;
         event_name = eventName;
+        event_num = eventNum;
     }
 }
