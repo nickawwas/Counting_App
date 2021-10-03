@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        //Go To Settings If Counters Names are Null
-        if(sharedPreferencesHelper.getCounterName("A") == null && sharedPreferencesHelper.getCounterName("B") == null && sharedPreferencesHelper.getCounterName("C") == null) {
+        //Go To Settings If Counters Names and Max Count are Not Defined
+        if(!sharedPreferencesHelper.getAppInitStatus()) {
             goToSettingsActivity();
         }
     }
@@ -94,13 +94,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Set Button Text to Defined Names If Changed
         // TODO: Check IF Max Count Changed
+        // TODO: Change Changed Counter...
         if(!oldCounterNameA.equals(newCounterNameA) ||  !oldCounterNameB.equals(newCounterNameB) || !oldCounterNameC.equals(newCounterNameC)) {
             counterA.setText(newCounterNameA);
             counterB.setText(newCounterNameB);
             counterC.setText(newCounterNameC);
 
             sharedPreferencesHelper.resetTotalCount();
-            totalCount.setText(getTotalCountText());
         }
     }
 

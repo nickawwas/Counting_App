@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -59,6 +60,10 @@ public class SettingsActivity extends AppCompatActivity {
                         sharedPreferencesHelper.updateMaxCount(maxCountNum);
 
                         setInputsEditableState(false);
+
+                        // App Initialization Complete
+                        if(!sharedPreferencesHelper.getAppInitStatus())
+                            sharedPreferencesHelper.setAppInitStatus();
                     }
                 }
             }
@@ -82,23 +87,40 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        if(sharedPreferencesHelper.getCounterName("A") == null && sharedPreferencesHelper.getCounterName("B") == null && sharedPreferencesHelper.getCounterName("C") == null) {
-            sharedPreferencesHelper.setSettingsMode(true);
+        // If App Not Initialized, Define Inputs
+        if(!sharedPreferencesHelper.getAppInitStatus()) {
             setInputsEditableState(true);
-            setInputsFocusable();
 
             counterInputNameA.setHint(R.string.counterInputPlaceholder);
             counterInputNameB.setHint(R.string.counterInputPlaceholder);
             counterInputNameC.setHint(R.string.counterInputPlaceholder);
             maxCountInput.setHint(R.string.maxCountInputPlaceholder);
         } else {
-            sharedPreferencesHelper.setSettingsMode(false);
             setInputsEditableState(false);
-            counterInputNameA.setHint(sharedPreferencesHelper.getCounterName("A"));
-            counterInputNameB.setHint(sharedPreferencesHelper.getCounterName("B"));
-            counterInputNameC.setHint(sharedPreferencesHelper.getCounterName("C"));
-            maxCountInput.setHint(sharedPreferencesHelper.getMaxCount());
+
+            counterInputNameA.setText(sharedPreferencesHelper.getCounterName("A"));
+            counterInputNameB.setText(sharedPreferencesHelper.getCounterName("B"));
+            counterInputNameC.setText(sharedPreferencesHelper.getCounterName("C"));
+            maxCountInput.setText(sharedPreferencesHelper.getMaxCount() + "");
         }
+
+//        if(sharedPreferencesHelper.getCounterName("A") == null && sharedPreferencesHelper.getCounterName("B") == null && sharedPreferencesHelper.getCounterName("C") == null) {
+//            //sharedPreferencesHelper.setSettingsMode(true);
+//            //setInputsEditableState(true);
+//            //setInputsFocusable();
+//
+//            counterInputNameA.setHint(R.string.counterInputPlaceholder);
+//            counterInputNameB.setHint(R.string.counterInputPlaceholder);
+//            counterInputNameC.setHint(R.string.counterInputPlaceholder);
+//            maxCountInput.setHint(R.string.maxCountInputPlaceholder);
+//        } else {
+//            //sharedPreferencesHelper.setSettingsMode(false);
+//            //setInputsEditableState(false);
+//            counterInputNameA.setText(sharedPreferencesHelper.getCounterName("A"));
+//            counterInputNameB.setText(sharedPreferencesHelper.getCounterName("B"));
+//            counterInputNameC.setText(sharedPreferencesHelper.getCounterName("C"));
+//            maxCountInput.setText(sharedPreferencesHelper.getMaxCount());
+//        }
 
         //Go To Settings If Counters Names are Null
 //        if(sharedPreferencesHelper.getCounterName("A") == null) {
@@ -130,7 +152,6 @@ public class SettingsActivity extends AppCompatActivity {
             case R.id.editSettingsItem:
                 sharedPreferencesHelper.setSettingsMode(true);
                 setInputsEditableState(true);
-                setInputsFocusable();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -152,14 +173,14 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     // Set Focusable Input Fields
-    private void setInputsFocusable() {
-        counterInputNameA.setFocusableInTouchMode(true);
-        counterInputNameB.setFocusableInTouchMode(true);
-        counterInputNameC.setFocusableInTouchMode(true);
-        maxCountInput.setFocusableInTouchMode(true);
-        counterInputNameA.setFocusable(true);
-        counterInputNameB.setFocusable(true);
-        counterInputNameC.setFocusable(true);
-        maxCountInput.setFocusable(true);
-    }
+//    private void setInputsFocusable() {
+//        counterInputNameA.setFocusableInTouchMode(true);
+//        counterInputNameB.setFocusableInTouchMode(true);
+//        counterInputNameC.setFocusableInTouchMode(true);
+//        maxCountInput.setFocusableInTouchMode(true);
+//        counterInputNameA.setFocusable(true);
+//        counterInputNameB.setFocusable(true);
+//        counterInputNameC.setFocusable(true);
+//        maxCountInput.setFocusable(true);
+//    }
 }

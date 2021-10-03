@@ -9,6 +9,17 @@ public class SharedPreferencesHelper {
         sharedPreferences = context.getSharedPreferences("EventPreference", Context.MODE_PRIVATE);
     }
 
+    // Set & Get App Initialization Status (Counters Defined & Saved)
+    public void setAppInitStatus() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("appInitStatus", true);
+        editor.commit();
+    }
+
+    public boolean getAppInitStatus() {
+        return sharedPreferences.getBoolean("appInitStatus", false);
+    }
+
     // Update & Get Counter Names
     public void updateCounterName(String counterId, String newCounterName) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
