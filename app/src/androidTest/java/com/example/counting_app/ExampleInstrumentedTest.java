@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.kawwas_ass1", appContext.getPackageName());
+        assertEquals("com.example.counting_app", appContext.getPackageName());
     }
 }
