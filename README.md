@@ -35,4 +35,4 @@ Build a Basic Android App with a Local Database Using Room
 > - Navigate Back to Main Activity with Up Navigation
 
 ## Dependencies
-Used Room to Create a Local Database
+Used Room to Create a Local Database and Gradle to Build the Java Project
