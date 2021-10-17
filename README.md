@@ -34,5 +34,20 @@ Build a Basic Android App with a Local Database Using Room
 >   - Button Number Mode: Displays Event Numbered 1-3
 > - Navigate Back to Main Activity with Up Navigation
 
+### Database
+> Create Room DB with One Table
+
+> Entity - Define Database Schema and Table Row Data
+> Event Table Schema
+
+| EventId (PK) | EventName | EventNumber | 
+| ------------ | --------- | ----------- |
+
+> DAO - Define Methods in Interface to Interact Data (Data Access Object)
+> - Insert Events into Table
+> - Delete All Events from Table
+> - Get List of Events Names and Numbers from Table
+> - Get Total Events Count and Specific Event Count By Event Number
+
 ## Dependencies
 Used Room to Create a Local Database and Gradle to Build the Java Project
